@@ -4,14 +4,14 @@
 
     var db = Database.Open("MegaDesk");
     var desk_quote_id = "";
-    /*var customer_name = "";
-    var width = 0;
-    var depth = 0;
-    var num_drawers = 0;
+    var customer_name = "";
+    var width = "";
+    var depth = "";
+    var num_drawers = "";
     var material = "";
-    var rush_order = 0;
-    var total_cost = 0.0;
-    var date_added = new DateTime();*/
+    var rush_order = "";
+    var total_cost = "";
+    var date_added = new DateTime();
 
     Validation.RequireField("customer_name", "Name is required.");
     Validation.RequireField("width", "Width is required.");
@@ -29,14 +29,14 @@
             Console.WriteLine(desk_quote_id);
             var dbCommand = "SELECT customer_name, width, depth, num_drawers, material, rush_order, total_cost, date_added FROM Desk_Quotes WHERE desk_quote_id = @0";
             var row = db.QuerySingle(dbCommand, desk_quote_id);
-            var customer_name = row.customer_name;
-            var width = row.width;
-            var depth = row.depth;
-            var num_drawers = row.num_drawers;
-            var material = row.material;
-            var rush_order = row.rush_order;
-            var total_cost = row.total_cost;
-            var date_added = row.date_added;
+            customer_name = row.customer_name;
+            width = row.width;
+            depth = row.depth;
+            num_drawers = row.num_drawers;
+            material = row.material;
+            rush_order = row.rush_order;
+            total_cost = row.total_cost;
+            date_added = row.date_added;
         }
         else
         {
@@ -46,17 +46,17 @@
 
     if (IsPost)
     {
-        var customer_name = Request.Form["customer_name"];
-        var width = Request.Form["width"];
-        var depth = Request.Form["depth"];
-        var num_drawers = Request.Form["num_drawers"];
-        var material = Request.Form["material"];
-        var rush_order = Request.Form["rush_order"];
-        var date_added = DateTime.Now;
+        customer_name = Request.Form["customer_name"];
+        width = Request.Form["width"];
+        depth = Request.Form["depth"];
+        num_drawers = Request.Form["num_drawers"];
+        material = Request.Form["material"];
+        rush_order = Request.Form["rush_order"];
+        date_added = DateTime.Now;
 
         if (Validation.IsValid())
         {
-            var total_cost = 0.0;
+            total_cost = 0.0;
             var base_desk_price = 200.00;
             var drawer_price = 50.00 * float.Parse(num_drawers);
             var surface_material_price = 0.0;
