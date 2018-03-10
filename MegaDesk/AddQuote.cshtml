@@ -1,0 +1,168 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "New Desk Quote";
+
+    var db = Database.Open("MegaDesk");
+
+    Validation.RequireField("customer_name", "Name is required.");
+    Validation.RequireField("width", "Width is required.");
+    Validation.Add("width", Validator.Integer());
+    Validation.Add("width", Validator.Range(24, 96));
+    Validation.RequireField("depth", "Depth is required.");
+    Validation.Add("depth", Validator.Integer());
+    Validation.Add("depth", Validator.Range(12, 48));
+
+    if (IsPost)
+    {
+        var customer_name = Request.Form["customer_name"];
+        var width = Request.Form["width"];
+        var depth = Request.Form["depth"];
+        var num_drawers = Request.Form["num_drawers"];
+        var material = Request.Form["material"];
+        var rush_order = Request.Form["rush_order"];
+        var date_added = DateTime.Now;
+
+        if(Validation.IsValid())
+        {
+            var total_cost = 0.0;
+            var base_desk_price = 200.00;
+            var drawer_price = 50.00 * float.Parse(num_drawers);
+            var surface_material_price = 0.0;
+            var extra_surface_area_price = 0.0;
+            var rush_order_price = 0.0;
+            var surface_area = float.Parse(width) * float.Parse(depth);
+
+            switch (material)
+            {
+                case "Oak":
+                    surface_material_price = 200.00;
+                    break;
+
+                case "Laminate":
+                    surface_material_price = 100.00;
+                    break;
+
+                case "Pine":
+                    surface_material_price = 50.00;
+                    break;
+
+                case "Rosewood":
+                    surface_material_price = 300.00;
+                    break;
+
+                case "Veneer":
+                    surface_material_price = 125.00;
+                    break;
+            }
+
+            if(surface_area > 1000.00)
+            {
+                extra_surface_area_price = surface_area - 1000.00;
+            }
+
+            switch (rush_order)
+            {
+                case "3":
+                    if(surface_area < 1000.00)
+                    {
+                        rush_order_price = 60.00;
+                    }
+                    else if(surface_area < 2000.00)
+                    {
+                        rush_order_price = 70.00;
+                    }
+                    else if(surface_area >= 2000.00)
+                    {
+                        rush_order_price = 80.00;
+                    }
+                    break;
+
+                case "5":
+                    if (surface_area < 1000.00)
+                    {
+                        rush_order_price = 40.00;
+                    }
+                    else if (surface_area < 2000.00)
+                    {
+                        rush_order_price = 50.00;
+                    }
+                    else if (surface_area >= 2000.00)
+                    {
+                        rush_order_price = 60.00;
+                    }
+                    break;
+
+                case "7":
+                    if (surface_area < 1000.00)
+                    {
+                        rush_order_price = 30.00;
+                    }
+                    else if (surface_area < 2000.00)
+                    {
+                        rush_order_price = 35.00;
+                    }
+                    else if (surface_area >= 2000.00)
+                    {
+                        rush_order_price = 40.00;
+                    }
+                    break;
+            }
+            total_cost = base_desk_price + drawer_price + surface_material_price + extra_surface_area_price + rush_order_price;
+
+            var insertCommand = "INSERT INTO Desk_Quotes (customer_name, width, depth, num_drawers, material, rush_order, total_cost, date_added) VALUES (@0, @1, @2, @3, @4, @5, @6, @7)";
+            db.Execute(insertCommand, customer_name, width, depth, num_drawers, material, rush_order, total_cost, date_added);
+            Response.Redirect("~/index");
+        }
+    }
+}
+
+
+<form id="new_quote" method="post">
+    <label for="customer_name">Name:</label>
+    <input id="customer_name" type="text" name="customer_name" />
+    @Html.ValidationMessage("customer_name")
+    <br>
+    
+    <label for="width">Width:</label>
+    <input id="width" type="number" name="width" />
+    @Html.ValidationMessage("width")
+    <br>
+
+    <label for="depth">Depth:</label>
+    <input id="depth" type="number" name="depth" />
+    @Html.ValidationMessage("depth")
+    <br>
+
+    <label for="num_drawers">Number of Drawers:</label>
+    <select id="num_drawers" name="num_drawers">
+        <option value="0" selected="selected">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+    </select>
+    <br>
+
+    <label for="material">Material:</label>
+    <select id="material" name="material">        
+        @foreach (var row in db.Query("SELECT * FROM Materials"))
+        {
+            <option value="@row.Material" name="@row.Material">@row.Material</option>
+        }        
+    </select>
+    <br>
+
+    <label for="rush_order">Rush Order Schedule:</label>
+    <select id="rush_order" name="rush_order">
+        <option value="0" selected="selected">Standard (14 Days)</option>
+        <option value="3">3 Days</option>
+        <option value="5">5 Days</option>
+        <option value="7">7 Days</option>
+    </select>
+    <br>
+
+    <input type="submit" value="Submit"/>
+</form>

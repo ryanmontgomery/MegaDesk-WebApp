@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <h1>MegaDesk</h1>
+    </header>
+
+    <nav>
+        <a href="~/index.cshtml" class="nav-link">Home</a>
+        <a href="~/index.cshtml" class="nav-link">Quotes</a>
+        <a href="~/index.cshtml" class="nav-link">Search</a>
+    </nav>
+
+    <main>
+        <h2>@Page.Title</h2>
+        <div>
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        Scott Tolman - Ryan Montgomery || CIT 365: 02
+    </footer>
+</body>
+</html>

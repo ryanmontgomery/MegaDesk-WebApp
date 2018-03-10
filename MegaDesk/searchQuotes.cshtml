@@ -1,0 +1,30 @@
+﻿@{ 
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "Search Desk Quotes";
+
+    var db = Database.Open("MegaDesk");
+    var selectCommand = "SELECT * FROM Desk_Quotes";
+
+    var selectedData = db.Query(selectCommand);
+    var grid = new WebGrid(source: selectedData, rowsPerPage: 5);
+}
+
+<div class="quotesGrid">
+    @grid.GetHtml(
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+            grid.Column(format: @<a href="~/editQuote?id=@item.desk_quote_id">Edit</a>),
+            grid.Column("desk_quote_id"),
+            grid.Column("customer_name"),
+            grid.Column("width"),
+            grid.Column("depth"),
+            grid.Column("num_drawers"),
+            grid.Column("material"),
+            grid.Column("rush_order"),
+            grid.Column("total_cost"),
+            grid.Column("date_added"),
+            grid.Column(format: @<a href="~/deleteQuote?id=@item.desk_quote_id">Delete</a>)
+        )
+    )
+</div>
