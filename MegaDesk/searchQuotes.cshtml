@@ -1,14 +1,31 @@
 ﻿@{ 
     Layout = "~/Shared/_Layout.cshtml";
-    Page.Title = "Search Desk Quotes";
+    Page.Title = "View All Desk Quotes";
 
     var db = Database.Open("MegaDesk");
-    var selectCommand = "SELECT * FROM Desk_Quotes";
+    var selectCommand = "";
+    IEnumerable<dynamic> selectedData;
+    selectCommand = "SELECT * FROM Desk_Quotes";
+    selectedData = db.Query(selectCommand);
 
-    var selectedData = db.Query(selectCommand);
+    if (IsPost)
+    {
+        if (!Request.Form["search"].IsEmpty())
+        {
+            selectCommand = "SELECT * FROM Desk_Quotes WHERE customer_name = @0";
+            selectedData = db.Query(selectCommand, Request.Form["search"]);
+        }
+    }
+
     var grid = new WebGrid(source: selectedData, rowsPerPage: 5);
 }
 
+<div>
+    <form method="post">
+        <label for="search">Search by first or last name</label>
+        <input type="text" name="search" id="search" /><input type="submit" value="Search" /><br />
+    </form>
+</div>
 <div class="quotesGrid">
     @grid.GetHtml(
         headerStyle: "head",
