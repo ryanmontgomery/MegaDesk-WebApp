@@ -151,62 +151,68 @@
     }
 }
 
-<script>
-    document.getElementsByTagName("body").addEventListener("load", matSelect(@material));
-</script>
-<form id="update_quote" method="post"">
-    <label for="customer_name">Name:</label>
-    <input id="customer_name" type="text" name="customer_name" value=@customer_name />
-    @Html.ValidationMessage("customer_name")
+
+<form id="update_quote" method="post">
+    <div class="form-item">
+        <label for="customer_name">Name:</label>
+        <input id="customer_name" type="text" name="customer_name" value=@customer_name />
+        @Html.ValidationMessage("customer_name")
+    </div>
     <br>
 
-    <label for="width">Width:</label>
-    <input id="width" type="number" name="width" value=@width />
-    @Html.ValidationMessage("width")
+    <div class="form-item">
+        <label for="width">Width:</label>
+        <input id="width" type="number" name="width" value=@width />
+        @Html.ValidationMessage("width")
+    </div>
     <br>
 
-    <label for="depth">Depth:</label>
-    <input id="depth" type="number" name="depth" value=@depth />
-    @Html.ValidationMessage("depth")
+    <div class="form-item">
+        <label for="depth">Depth:</label>
+        <input id="depth" type="number" name="depth" value=@depth />
+        @Html.ValidationMessage("depth")
+    </div>
     <br>
 
-    <label for="num_drawers">Number of Drawers:</label>
-    <select id="num_drawers" name="num_drawers">
-        <option id="d0" value="0">0</option>
-        <option id="d1" value="1">1</option>
-        <option id="d2" value="2">2</option>
-        <option id="d3" value="3">3</option>
-        <option id="d4" value="4">4</option>
-        <option id="d5" value="5">5</option>
-        <option id="d6" value="6">6</option>
-        <option id="d7" value="7">7</option>
-    </select>
-    <script>
-        document.getElementById("d" + @num_drawers).setAttribute("selected", "selected");
-    </script>
+    <div class="form-item">
+        <label for="num_drawers">Number of Drawers:</label>
+        <select id="num_drawers" name="num_drawers">
+            <option value="0" selected="selected">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+    </div>
     <br>
 
-    <label for="material">Material:</label>
-    <select id="material" name="material">
-        @foreach (var row in db.Query("SELECT * FROM Materials"))
-        {
-            <option id=@row.Material value="@row.Material" name="@row.Material">@row.Material</option>
-        }
-    </select>
+    <div class="form-item">
+        <label for="material">Material:</label>
+        <select id="material" name="material">
+            @foreach (var row in db.Query("SELECT * FROM Materials"))
+            {
+                <option value="@row.Material" name="@row.Material">@row.Material</option>
+            }
+        </select>
+    </div>
     <br>
 
-    <label for="rush_order">Rush Order Schedule:</label>
-    <select id="rush_order" name="rush_order">
-        <option id="r0" value="0">Standard (14 Days)</option>
-        <option id="r3" value="3">3 Days</option>
-        <option id="r5" value="5">5 Days</option>
-        <option id="r7" value="7">7 Days</option>
-    </select>
-    <script>
-        document.getElementById("r" + @rush_order).setAttribute("selected", "selected");
-    </script>
-    <input type="hidden" name="desk_quote_id" value=@desk_quote_id />
+    <div class="form-item">
+        <label for="rush_order">Rush Order Schedule:</label>
+        <select id="rush_order" name="rush_order">
+            <option value="0" selected="selected">Standard (14 Days)</option>
+            <option value="3">3 Days</option>
+            <option value="5">5 Days</option>
+            <option value="7">7 Days</option>
+        </select>
+        <input type="hidden" name="desk_quote_id" value=@desk_quote_id />
+    </div>
     <br>
 
-    <input type="submit" value="Submit" />
+    <div class="form-item">
+        <input type="submit" value="Submit" />
+    </div>
 </form>

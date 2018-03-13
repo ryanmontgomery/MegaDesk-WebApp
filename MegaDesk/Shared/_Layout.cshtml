@@ -16,21 +16,22 @@
         <h1>MegaDesk</h1>
     </header>
 
-    <nav>
-        <strong><a href="~/index.cshtml" class="nav-link">Home | </a></strong>
-        <strong><a href="~/searchQuotes.cshtml" class="nav-link">View Quotes | </a></strong>
-        <strong><a href="~/AddQuote.cshtml" class="nav-link">New Quote</a></strong>
-    </nav>
-    <br /><br /><br />
+    <div class="top-nav" id="con-top-nav">
+        <a id="nav-home" href="~/index.cshtml">Home</a>
+        <a id="nav-view-quotes" href="~/searchQuotes.cshtml">View Quotes</a>
+        <a id="nav-add-quote" href="~/AddQuote.cshtml">Add Quote</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+
     <main>
         <h2>@Page.Title</h2>
         <div>
             @RenderBody()
         </div>
     </main>
-    <br /><br /><br />
+    <hr />
     <footer>
-        Scott Tolman - Ryan Montgomery || CIT 365: 02
+        <p>Scott Tolman - Ryan Montgomery || CIT 365: 02</p>
     </footer>
 </body>
 </html>
