@@ -22,7 +22,7 @@
 
 <div>
     <form method="post">
-        <label for="search">Search by first or last name</label>
+        <label for="search">Customer Name: </label>
         <input type="text" name="search" id="search" /><input type="submit" value="Search" /><br />
     </form>
 </div>
@@ -31,7 +31,6 @@
         headerStyle: "head",
         alternatingRowStyle: "alt",
         columns: grid.Columns(
-            grid.Column(format: @<a href="~/editQuote?id=@item.desk_quote_id">Edit</a>),
             grid.Column("desk_quote_id"),
             grid.Column("customer_name"),
             grid.Column("width"),
@@ -41,6 +40,7 @@
             grid.Column("rush_order"),
             grid.Column("total_cost"),
             grid.Column("date_added"),
+            grid.Column(format: @<a href="~/editQuote?id=@item.desk_quote_id">Edit</a>),
             grid.Column(format: @<a href="~/deleteQuote?id=@item.desk_quote_id">Delete</a>)
         )
     )
