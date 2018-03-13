@@ -95,6 +95,7 @@
     <Content Include="deleteQuote.cshtml" />
     <Content Include="editQuote.cshtml" />
     <None Include="packages.config" />
+    <Content Include="MegaDesk.js" />
     <Content Include="Shared\_Layout.cshtml" />
     <Content Include="searchQuotes.cshtml" />
     <None Include="Web.Debug.config">
