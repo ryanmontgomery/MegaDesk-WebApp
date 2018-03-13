@@ -177,39 +177,49 @@
     <div class="form-item">
         <label for="num_drawers">Number of Drawers:</label>
         <select id="num_drawers" name="num_drawers">
-            <option value="0" selected="selected">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
+            <option id="d0" value="0" selected="selected">0</option>
+            <option id="d1" value="1">1</option>
+            <option id="d2" value="2">2</option>
+            <option id="d3" value="3">3</option>
+            <option id="d4" value="4">4</option>
+            <option id="d5" value="5">5</option>
+            <option id="d6" value="6">6</option>
+            <option id="d7" value="7">7</option>
         </select>
+        <script>
+        document.getElementById("d" + @num_drawers).setAttribute("selected", "selected");
+        </script>
     </div>
     <br>
 
     <div class="form-item">
         <label for="material">Material:</label>
         <select id="material" name="material">
-            @foreach (var row in db.Query("SELECT * FROM Materials"))
-            {
-                <option value="@row.Material" name="@row.Material">@row.Material</option>
-            }
+            <option id="Laminate" value="Laminate" name="Laminate">Laminate</option>
+            <option id="Oak" value="Oak" name="Oak">Oak</option>
+            <option id="Rosewood" value="Rosewood" name="Rosewood">Rosewood</option>
+            <option id="Veneer" value="Veneer" name="Veneer">Veneer</option>
+            <option id="Pine" value="Pine" name="Pine">Pine</option>
         </select>
+        <script>
+            document.getElementById("@material").setAttribute("selected", "selected");
+        </script>
     </div>
     <br>
 
     <div class="form-item">
         <label for="rush_order">Rush Order Schedule:</label>
         <select id="rush_order" name="rush_order">
-            <option value="0" selected="selected">Standard (14 Days)</option>
-            <option value="3">3 Days</option>
-            <option value="5">5 Days</option>
-            <option value="7">7 Days</option>
+            <option id="r0" value="0" selected="selected">Standard (14 Days)</option>
+            <option id="r3" value="3">3 Days</option>
+            <option id="r5" value="5">5 Days</option>
+            <option id="r7" value="7">7 Days</option>
         </select>
         <input type="hidden" name="desk_quote_id" value=@desk_quote_id />
     </div>
+    <script>
+        document.getElementById("r" + @rush_order).setAttribute("selected", "selected");
+    </script>
     <br>
 
     <div class="form-item">
